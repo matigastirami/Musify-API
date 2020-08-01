@@ -1,3 +1,0 @@
-D:\Workspace\curso-mean2\api\obj\Debug\curso-mean2vs.njsprojResolveAssemblyReference.cache
-D:\Workspace\curso-mean2\api\obj\Debug\curso-mean2vs.njsproj.CoreCompileInputs.cache
-D:\Workspace\curso-mean2\api\bin\Microsoft.NodejsTools.WebRole.dll
