@@ -1,0 +1,33 @@
+{
+  "name": "msfy-backend-refactor",
+  "version": "1.0.0",
+  "description": "Musify backend code refactor using patterns and node.js best practices",
+  "main": "index.js",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1",
+    "express-validator": "^6.6.0",
+    "moment": "^2.27.0",
+    "pg": "^8.3.0",
+    "pg-hstore": "^2.3.3",
+    "rimraf": "^3.0.2",
+    "sequelize": "^6.3.3"
+  },
+  "devDependencies": {
+    "nodemon": "^1.19.4"
+  },
+  "scripts": {
+    "dev": "nodemon index.js",
+    "test": "mocha"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/mean-stack-projects/musify-mean/msfy-backend.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/mean-stack-projects/musify-mean/msfy-backend/issues"
+  },
+  "homepage": "https://gitlab.com/mean-stack-projects/musify-mean/msfy-backend#readme"
+}
