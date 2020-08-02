@@ -1,13 +1,13 @@
-const { RoleService } = require("../services");
 const { getStatusCode } = require("../bin/util");
 const { validationResult } = require("express-validator");
 
 class RoleController {
-    constructor(){
+    constructor(roleService){
+        this.roleService = roleService;
     }
 
     //POST api/role
-    async create(req, res){
+    create = async (req, res) =>{
         
         const errors = validationResult(req);
         if (!errors.isEmpty()) {
@@ -15,76 +15,89 @@ class RoleController {
         }
 
         let DTO = req.body;
-        let service = new RoleService();
         try {
-            let { result, user } = await service.createRole(DTO.description);
-            console.log(result, user)
+            let { result, user } = await this.roleService.createRole(DTO.description);
+            //console.log(result, user)
             res.status(201).send(user)
         } catch (ex) {
-            console.log(ex)
+            //console.log(ex)
             res.status(500).send(ex.message)
         }
     }
 
     //PUT api/role/:id
-    async update(req, res){
+    update = async (req, res) => {
+        
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         let DTO = req.body;
-        let service = new RoleService();
         try {
-            let {result, updated, code} = await service.updateRole(req.params.id, DTO.description);
+            let {result, updated, code} = await this.roleService.updateRole(req.params.id, DTO.description);
             if(!result){
                 return res.status(getStatusCode(code)).end();
             }
             return res.status(200).send(updated);
         } catch (ex) {
-            console.log("Exeption RoleController.update: ", ex);
+            //console.log("Exeption RoleController.update: ", ex);
             res.status(500).send(ex.message);
         }
     }
 
-    async search(req, res){
-        let service = new RoleService();
+    search = async (req, res) =>{
         try {
-            let { result, roles } = await service.getRoles();
+            let { result, roles } = await this.roleService.getRoles();
             if(!result){
                 return res.status(getStatusCode(code)).end();
             }
             return res.status(200).send(roles);
         } catch (ex) {
-            console.log("Exeption RoleController.search: ", ex);
+            //console.log("Exeption RoleController.search: ", ex);
             res.status(500).send(ex.message);
         }
     }
 
-    async get(req, res){
+    get = async (req, res) => {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         let id = req.params.id;
-        let service = new RoleService();
         try {
-            let { result, role, code } = await service.getRole(id);
+            let { result, role, code } = await this.roleService.getRole(id);
             if(!result){
                 return res.status(getStatusCode(code)).end();
             }
             return res.status(200).send(role);
         } catch (ex) {
-            console.log("Exeption RoleController.search: ", ex);
+            //console.log("Exeption RoleController.search: ", ex);
             res.status(500).send(ex.message);
         }
     }
 
-    async delete(req, res){
+    delete = async (req, res) => {
+
+        const errors = validationResult(req);
+        if (!errors.isEmpty()) {
+            return res.status(400).json({ errors: errors.array() });
+        }
+
         let id = req.params.id;
-        let service = new RoleService();
         try {
-            let { result, deleted, code } = await service.deleteRole(id);
+            let { result, deleted, code } = await this.roleService.deleteRole(id);
             if(!result){
                 return res.status(getStatusCode(code)).end();
             }
             return res.status(200).send(deleted);
         } catch (ex) {
-            console.log("Exeption RoleController.delete: ", ex);
+            //console.log("Exeption RoleController.delete: ", ex);
             res.status(500).send(ex.message);
         }
     }
 }
 
-module.exports = new RoleController();
+module.exports = RoleController;

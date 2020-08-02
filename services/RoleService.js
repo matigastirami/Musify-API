@@ -1,26 +1,22 @@
-const config = require('../config');
-const sequelize = require('../loaders/sequelize')(config.database);
-const RoleModel = require('../models/RoleModel')(sequelize);
-
 class RoleService {
-    constructor(){
-        this.roleModel = RoleModel;
+    constructor(roleModel){
+        this.roleModel = roleModel;
     }
 
-    async createRole(description){
-        const user = RoleModel.build({ description });
+    createRole = async (description) => {
+        const user = this.roleModel.build({ description });
         try {
             let saveResult = await user.save();
-            console.log(saveResult)
+            //console.log(saveResult)
             return { result : true, user: user.toJSON() };
         } catch (ex) {
             throw new Error(`RoleService.createRole: ${ex.message}`);
         }
     }
 
-    async updateRole(id, description){
+    updateRole = async (id, description) => {
         try {
-            let updated = await RoleModel.update(
+            let updated = await this.roleModel.update(
                 {
                     description,
                     modifydate: (new Date()).setUTCHours(-6)
@@ -43,9 +39,9 @@ class RoleService {
         }
     }
 
-    async getRole(id){
+    getRole = async (id) => {
         try {
-            let role = await RoleModel.findByPk(id, { where: { enddate: null } });
+            let role = await this.roleModel.findByPk(id, { where: { enddate: null } });
 
             if(!role){
                 return { result: false, code: 'NOT_FOUND' }
@@ -57,9 +53,9 @@ class RoleService {
         }
     }
 
-    async getRoles(){
+    getRoles = async () => {
         try {
-            let roles = await RoleModel.findAll({ where: { enddate: null } })
+            let roles = await this.roleModel.findAll({ where: { enddate: null } })
 
             return { result: true, roles };
         } catch(ex) {
@@ -67,9 +63,9 @@ class RoleService {
         }
     }
 
-    async deleteRole(id){
+    deleteRole = async (id) => {
         try {
-            let deleted = await RoleModel.update(
+            let deleted = await this.roleModel.update(
                 {
                     enddate: (new Date()).setUTCHours(-6)
                 },
@@ -81,7 +77,7 @@ class RoleService {
                 }
             );
 
-            console.log(deleted);
+            //console.log(deleted);
 
             if(!deleted[0]){
                 return { result: false, code: 'NOT_FOUND' };    
