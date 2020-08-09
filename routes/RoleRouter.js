@@ -3,12 +3,6 @@ const Router = require('express').Router()
 
 const { body, param } = require('express-validator');
 
-/**
- * @swagger
- * /users:
- *    get:
- *      description: This should return all users
- */
 Router.post(
     '/role', 
     [

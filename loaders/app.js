@@ -1,4 +1,4 @@
-//This file starts the api
+//This file configures the api
 const express = require('express');
 const app = express();
 const path = require('path');

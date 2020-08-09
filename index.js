@@ -1,3 +1,5 @@
+//This file starts the api
+
 //Load env vars
 require('dotenv').config();
 const config = require('./config')
