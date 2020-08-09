@@ -1,7 +1,7 @@
 const { DataTypes, Deferrable } = require('sequelize');
 const RoleModel = require('./RoleModel');
 
-module.exports = (orm) => orm.define('user', {
+module.exports = (orm) => orm.define('users', {
         id: { 
             type: DataTypes.INTEGER, 
             primaryKey: true,
@@ -30,15 +30,27 @@ module.exports = (orm) => orm.define('user', {
         },
         image_path: {
             type: DataTypes.STRING(100),
-            allowNull: false
+            allowNull: true
         },
         image_url: {
             type: DataTypes.STRING(100),
-            allowNull: false
+            allowNull: true
         },
         password: {
             type: DataTypes.STRING(300),
             allowNull: false
+        },
+        created: {
+            type: DataTypes.DATE,
+            allowNull: false
+        },
+        updated: {
+            type: DataTypes.DATE,
+            allowNull: true
+        },
+        deleted: {
+            type: DataTypes.DATE,
+            allowNull: true
         }
     },
     {

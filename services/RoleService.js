@@ -41,7 +41,7 @@ class RoleService {
 
     getRole = async (id) => {
         try {
-            let role = await this.roleModel.findByPk(id, { where: { enddate: null } });
+            let role = await this.roleModel.findOne({ where: { id, enddate: null } });
 
             if(!role){
                 return { result: false, code: 'NOT_FOUND' }
