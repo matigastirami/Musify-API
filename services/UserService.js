@@ -1,6 +1,9 @@
+const { comparePassword, hashPassword } = require('../bin/util');
+
 class UserService {
-    constructor(userModel){
+    constructor(userModel, roleModel){
         this.userModel = userModel;
+        this.roleModel = roleModel;
     }
 
     createUser = async ({ name, surname, email, password, role_id, image_path = null, image_url = null }) => {
@@ -102,6 +105,24 @@ class UserService {
             return { result: true, deleted: deleted[1][0] };
         } catch (ex) {
             throw new Error(`RoleService.deleteRoles: ${ex.message}`);
+        }
+    }
+
+    login = async (email, password) => {
+        let user = await this.userModel.findOne({ where: { email, deleted: null }, include: [this.roleModel] });
+
+        if(!user){
+            return { result: false, code: 'NOT_FOUND' } 
+        }
+
+        let isPasswordCorrect = await comparePassword(password, user.password);
+
+        if(!isPasswordCorrect)
+            return { result: false, code: 'UNAUTHORIZED' };
+
+        return { 
+            result: true,
+            user
         }
     }
 }

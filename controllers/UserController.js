@@ -98,6 +98,20 @@ class UserController {
             res.status(500).send(ex.message);
         }
     }
+
+    login = async (req, res) => {
+        let DTO = req.body;
+        try {
+            let { result, user, code } = await this.userService.login(DTO.username, DTO.password);
+            if(!result){
+                return res.status(getStatusCode(code)).end();
+            }
+            return res.status(200).send(user);
+        } catch (ex) {
+            //console.log("Exeption UserController.delete: ", ex);
+            res.status(500).send(ex.message);
+        }
+    }
 }
 
 module.exports = UserController;

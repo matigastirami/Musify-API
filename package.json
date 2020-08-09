@@ -4,6 +4,7 @@
   "description": "Musify backend code refactor using patterns and node.js best practices",
   "main": "index.js",
   "dependencies": {
+    "bcrypt": "^5.0.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-validator": "^6.6.0",

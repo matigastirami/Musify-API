@@ -9,7 +9,7 @@ const userModel = UserModel(sequelize);
 //Import services
 const { RoleService, UserService } = require('../services');
 const roleService = new RoleService(roleModel);
-const userService = new UserService(userModel);
+const userService = new UserService(userModel, roleModel);
 
 //Import controllers
 const RoleController = require('./RoleController');

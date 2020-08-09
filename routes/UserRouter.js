@@ -77,4 +77,17 @@ Router.delete(
     UserController.delete
 );
 
+Router.post(
+    '/auth/token', 
+    [
+        body('username')
+            .exists({ checkNull: true }).withMessage("username must be an not null value")
+            .isString().withMessage("username must be a string"),
+        body('password')
+            .exists({ checkNull: true }).withMessage("password must be an not null value")
+            .isString().withMessage("password must be a string")
+    ],
+    UserController.login
+);
+
 module.exports = Router;
